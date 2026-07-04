@@ -50,33 +50,125 @@
 
 
 /*--------------------------------------------------------------
-# Home hero — field photo, text positioned over the sky
+# Full-page hero — image, particles, then text
 --------------------------------------------------------------*/
+
+/* Remove overlay padding so hero fills the viewport edge-to-edge */
+#overlay {
+  padding: 0;
+}
+
 #header {
   align-items: flex-start;
-  background:
-    linear-gradient(180deg,
-      rgba(0,0,0,0.62) 0%,
-      rgba(0,0,0,0.32) 26%,
-      rgba(0,0,0,0.05) 48%,
-      rgba(0,0,0,0)    62%,
-      rgba(0,0,0,0.40) 100%),
-    url("../img/hero-bg.jpg") center center / cover no-repeat;
+  background: none;
+  z-index: auto;
 }
-#header .container { padding-top: 7vh; }
+
+/* Hero image — lowest layer */
+#header::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("../img/hero-bg.jpg") center center / cover no-repeat;
+  z-index: -1;
+}
+
+/* Gradient overlay — above particles, dims edges for readability */
+#header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg,
+    rgba(0,0,0,0.62) 0%,
+    rgba(0,0,0,0.32) 26%,
+    rgba(0,0,0,0.05) 48%,
+    rgba(0,0,0,0)    62%,
+    rgba(0,0,0,0.40) 100%);
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Particles sit between hero image and gradient */
+#particles-js {
+  z-index: 1;
+}
+
+/* Text & nav above everything */
+#header .container {
+  padding-top: 7vh;
+  position: relative;
+  z-index: 3;
+}
 
 #header h1,
 #header h2 { text-shadow: 0 2px 14px rgba(0,0,0,0.6); }
 
-/* keep the scrolled sticky top-bar look unchanged */
+/* Collapsed sticky top-bar */
 #header.header-top {
   align-items: center;
   background: rgba(0,0,0,0.9);
+  z-index: 997;
 }
-#header.header-top .container { padding-top: 0; }
+#header.header-top::before,
+#header.header-top::after {
+  display: none;
+}
+#header.header-top .container { padding-top: 0; z-index: auto; }
 
 @media (max-width: 992px) {
   #header .container { padding-top: 5vh; }
+}
+
+/*--------------------------------------------------------------
+# Mobile layout improvements
+--------------------------------------------------------------*/
+@media (max-width: 768px) {
+  #header .container {
+    padding-top: 12vh;
+    text-align: center;
+  }
+  #header .social-links {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  #header .social-links a {
+    margin-right: 0;
+  }
+  section .container {
+    padding: 25px 15px;
+  }
+  section.section-show {
+    top: 70px;
+  }
+  .resume .resume-title {
+    font-size: 22px;
+  }
+  .resume .resume-item h4 {
+    font-size: 15px;
+    line-height: 22px;
+  }
+  .interests table.tg {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .about-me .row .col-lg-4 img {
+    max-width: 180px;
+    display: block;
+    margin: 0 auto 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  #header h1 { font-size: 28px; }
+  #header h2 { font-size: 15px; line-height: 22px; }
+  #header .social-links a { width: 36px; height: 36px; font-size: 14px; }
+  #header .social-links a i img { width: 20px !important; }
+  .navbar ul { padding: 10px 5px; }
+  .portfolio #portfolio-flters li { padding: 6px 10px; font-size: 12px; }
+  section .container { padding: 20px 10px; }
+  .section-title p { font-size: 26px; }
 }
 
 /* Social icons: dark legible circles on any background (incl. bright sky);
