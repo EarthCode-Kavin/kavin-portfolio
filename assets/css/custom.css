@@ -1,9 +1,63 @@
+/*--------------------------------------------------------------
+# Geist Pixel — Vercel's pixel-grid typeface (SIL OFL 1.1)
+# Source: https://github.com/vercel/geist-pixel-font
+# A raster grid for a remote-sensing portfolio.
+--------------------------------------------------------------*/
+@font-face {
+  font-family: "Geist Pixel";
+  src: url("../fonts/geist-pixel/GeistPixel-Square.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
 
+@font-face {
+  font-family: "Geist Pixel Grid";
+  src: url("../fonts/geist-pixel/GeistPixel-Grid.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Geist Pixel Circle";
+  src: url("../fonts/geist-pixel/GeistPixel-Circle.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Geist Pixel Triangle";
+  src: url("../fonts/geist-pixel/GeistPixel-Triangle.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Geist Pixel Line";
+  src: url("../fonts/geist-pixel/GeistPixel-Line.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Pixel-font legibility: no faux bold/italic smearing, roomier lines */
+body {
+  font-synthesis: none;
+  line-height: 1.75;
+  letter-spacing: 0.01em;
+}
+
+em, i:not([class]) {
+  font-style: normal;
+}
 
 .tg  {border-collapse:collapse;border-spacing:0;}
-.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:"Geist Pixel", sans-serif;font-size:14px;
   overflow:hidden;padding:10px 5px;word-break:normal;}
-.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:"Geist Pixel", sans-serif;font-size:14px;
   font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
 .tg .tg-syad{background-color:#000000;border-color:inherit;color:#ffffff;text-align:left;vertical-align:middle}
 .tg .tg-4f0n{background-color:#000000;border-color:inherit;color:#ffffff;text-align:center;vertical-align:middle}
@@ -64,12 +118,13 @@
   z-index: auto;
 }
 
-/* Hero image — lowest layer */
+/* Hero image — green-duotone raster; fills the frame, anchored to the bottom
+   so the foreground (where Kavin sits) stays and the sky crops off the top */
 #header::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: url("../img/hero-bg.jpg") center center / cover no-repeat;
+  background: #050505 url("../img/hero-bg-halftone.png") center bottom / cover no-repeat;
   z-index: -1;
 }
 
@@ -79,9 +134,9 @@
   position: absolute;
   inset: 0;
   background: linear-gradient(180deg,
-    rgba(0,0,0,0.62) 0%,
-    rgba(0,0,0,0.32) 26%,
-    rgba(0,0,0,0.05) 48%,
+    rgba(0,0,0,0.72) 0%,
+    rgba(0,0,0,0.40) 26%,
+    rgba(0,0,0,0.08) 48%,
     rgba(0,0,0,0)    62%,
     rgba(0,0,0,0.40) 100%);
   z-index: 2;
@@ -219,7 +274,7 @@
   left: 12px;
   bottom: 12px;
   color: #fff;
-  font-family: "Raleway", sans-serif;
+  font-family: "Geist Pixel", "Segoe UI", sans-serif;
   font-weight: 600;
   font-size: 15px;
   letter-spacing: .3px;
@@ -241,3 +296,20 @@
   pointer-events: none;
 }
 .gallery-item:hover::after { border-color: #1af07d; }
+
+/*--------------------------------------------------------------
+# Hero type scale — larger for the pixel font
+--------------------------------------------------------------*/
+#header h1 { font-size: 64px; }
+#header h2 { font-size: 28px; }
+.navbar a { font-size: 17px; }
+
+@media (max-width: 992px) {
+  #header h1 { font-size: 46px; }
+  #header h2 { font-size: 22px; }
+}
+
+@media (max-width: 480px) {
+  #header h1 { font-size: 34px; }
+  #header h2 { font-size: 18px; line-height: 26px; }
+}
