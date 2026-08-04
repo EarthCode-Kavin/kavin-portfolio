@@ -24,6 +24,7 @@
   <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
   <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="assets/vendor/leaflet/leaflet.css" rel="stylesheet">
 
   <!-- Template Main CSS File -->
   <link rel="stylesheet" href="assets/css/style.css" media="screen" />
@@ -425,47 +426,16 @@
         <p>Field visits, landscapes, and the Earth seen from above.</p>
       </div>
 
-      <div class="gallery-grid">
+      <!-- Map (left) + photo grid (right). Both are generated from
+           assets/js/gallery-map-data.js — edit that one file to add photos. -->
+      <div class="gallery-map-layout">
 
-        <a href="assets/img/gallery/fieldwork-valley.jpg" class="gallery-item portfolio-lightbox" data-gallery="field-gallery" data-glightbox="title: In the Field; description: Mapping with a rock hammer above a river valley.">
-          <img src="assets/img/gallery/fieldwork-valley-thumb.jpg" alt="In the field — rock hammer above a river valley" loading="lazy">
-          <span class="gallery-cap">In the Field</span>
-        </a>
+        <div class="gallery-map-col">
+          <div id="gallery-map" aria-label="Map of where these photos were taken"></div>
+          <p class="gallery-map-hint">Hover a marker for a preview · click for the photo · <kbd>Shift</kbd>-click a photo to locate it on the map.</p>
+        </div>
 
-        <a href="assets/img/gallery/field-coalmine.jpg" class="gallery-item portfolio-lightbox" data-gallery="field-gallery" data-glightbox="title: Opencast Mine; description: Field visit to an open-cast coal mine.">
-          <img src="assets/img/gallery/field-coalmine-thumb.jpg" alt="Field visit to an open-cast coal mine" loading="lazy">
-          <span class="gallery-cap">Opencast Mine</span>
-        </a>
-
-        <a href="assets/img/gallery/satellite-montage.jpg" class="gallery-item portfolio-lightbox" data-gallery="field-gallery" data-glightbox="title: Earth from Above; description: Satellite scenes — glaciers, deltas, braided rivers and false-colour terrain.">
-          <img src="assets/img/gallery/satellite-montage-thumb.jpg" alt="Montage of satellite scenes" loading="lazy">
-          <span class="gallery-cap">Earth from Above</span>
-        </a>
-
-        <a href="assets/img/gallery/ridge-viewpoint.jpg" class="gallery-item portfolio-lightbox" data-gallery="field-gallery" data-glightbox="title: On the Ridge; description: Forested ranges from a clifftop viewpoint.">
-          <img src="assets/img/gallery/ridge-viewpoint-thumb.jpg" alt="Forested ranges from a clifftop viewpoint" loading="lazy">
-          <span class="gallery-cap">On the Ridge</span>
-        </a>
-
-        <a href="assets/img/gallery/misty-forest.jpg" class="gallery-item portfolio-lightbox" data-gallery="field-gallery" data-glightbox="title: Into the Mist; description: A foggy pine trail in the hills.">
-          <img src="assets/img/gallery/misty-forest-thumb.jpg" alt="A foggy pine trail in the hills" loading="lazy">
-          <span class="gallery-cap">Into the Mist</span>
-        </a>
-
-        <a href="assets/img/gallery/riverside-tree.jpg" class="gallery-item portfolio-lightbox" data-gallery="field-gallery" data-glightbox="title: Riverside; description: Resting under a tree beside a rocky river.">
-          <img src="assets/img/gallery/riverside-tree-thumb.jpg" alt="Resting under a tree beside a rocky river" loading="lazy">
-          <span class="gallery-cap">Riverside</span>
-        </a>
-
-        <a href="assets/img/gallery/river-sunset.jpg" class="gallery-item portfolio-lightbox" data-gallery="field-gallery" data-glightbox="title: Golden Hour; description: Sunset over a rocky river.">
-          <img src="assets/img/gallery/river-sunset-thumb.jpg" alt="Sunset over a rocky river" loading="lazy">
-          <span class="gallery-cap">Golden Hour</span>
-        </a>
-
-        <a href="assets/img/gallery/hilltop-town.jpg" class="gallery-item portfolio-lightbox" data-gallery="field-gallery" data-glightbox="title: Above the Town; description: A hazy townscape from a rocky summit.">
-          <img src="assets/img/gallery/hilltop-town-thumb.jpg" alt="A hazy townscape from a rocky summit" loading="lazy">
-          <span class="gallery-cap">Above the Town</span>
-        </a>
+        <div class="gallery-grid"><!-- photos injected by gallery-map.js --></div>
 
       </div>
 
@@ -533,6 +503,12 @@
   <script src="assets/vendor/purecounter/purecounter.js"></script>
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
   <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
+  <script src="assets/vendor/leaflet/leaflet.js"></script>
+
+  <!-- Interactive map gallery (builds grid + map from the data file below).
+       Must run before main.js so GLightbox binds the generated grid. -->
+  <script src="assets/js/gallery-map-data.js"></script>
+  <script src="assets/js/gallery-map.js"></script>
 
   <script src="assets/js/particles.js"></script>
   <script src="assets/js/app.js"></script>

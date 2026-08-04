@@ -3,7 +3,7 @@
   "configurations": [
     {
       "name": "portfolio",
-      "runtimeExecutable": "C:\\Users\\KAVIN\\anaconda3\\python.exe",
+      "runtimeExecutable": "C:\\Users\\ADMIN\\anaconda3\\python.exe",
       "runtimeArgs": ["-m", "http.server", "8080"],
       "port": 8080
     }
