@@ -118,6 +118,23 @@
   // Recompute size once laid out (flex/sticky can mis-measure on first paint)
   setTimeout(function () { map.invalidateSize(); }, 200);
 
+  // The map height is viewport-relative, so re-measure (and re-frame) on resize
+  // and on orientation change, otherwise Leaflet leaves grey gaps where tiles
+  // were never requested for the new size.
+  var resizeTimer;
+  window.addEventListener("resize", function () {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function () {
+      map.invalidateSize();
+      if (located.length) {
+        map.fitBounds(
+          L.latLngBounds(located.map(function (o) { return [o.p.lat, o.p.lng]; })),
+          { padding: [40, 40], maxZoom: 11, animate: false }
+        );
+      }
+    }, 150);
+  });
+
   // --- 3. Link grid <-> map ------------------------------------------------
   function highlightGrid(i, on) {
     var el = grid.querySelector('.gallery-item[data-index="' + i + '"]');

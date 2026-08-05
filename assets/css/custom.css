@@ -317,26 +317,54 @@ em, i:not([class]) {
 /*--------------------------------------------------------------
 # Interactive map gallery (Leaflet) — map left, photo grid right
 --------------------------------------------------------------*/
+/* The template sets a global `section { overflow: hidden }`, which silently
+   disables position:sticky for anything inside (overflow:hidden makes the
+   section a scroll container, so the map would pin to *it* instead of the page).
+   `clip` still clips the box but creates no scroll container, so sticky works.
+   If a browser doesn't support `clip` it simply falls back to `hidden`. */
+#gallery { overflow: clip; }
+
+/* Sections are stacked and merely faded out (opacity:0) when inactive, so a
+   hidden gallery must not intercept clicks meant for the visible section. */
+#gallery:not(.section-show) { pointer-events: none; }
+
+/* Full-bleed gallery: ignore the Bootstrap container cap and use fluid side
+   padding so it fits any desktop resolution and stays comfortable on mobile. */
+#gallery > .container {
+  max-width: none;
+  width: 100%;
+  padding-inline: clamp(16px, 3.5vw, 72px);
+}
+
 .gallery-map-layout {
   display: flex;
-  gap: 22px;
+  gap: clamp(16px, 2vw, 30px);
   align-items: flex-start;
 }
+
+/* Map column: fluid width, and it STAYS PUT while the photos scroll past. */
 .gallery-map-col {
-  flex: 0 0 42%;
-  max-width: 42%;
+  flex: 0 0 clamp(320px, 38%, 620px);
   position: sticky;
   top: 90px;
+  align-self: flex-start;   /* required: stretch would kill the sticky travel */
 }
 .gallery-map-layout .gallery-grid {
   flex: 1 1 auto;
   min-width: 0;
-  column-count: 2;      /* narrower column now that the map shares the row */
-  column-gap: 14px;
+  /* Fluid columns: more photos per row on big screens, fewer on small ones. */
+  column-count: unset;
+  columns: 300px 3;
+  column-gap: clamp(10px, 1vw, 16px);
+}
+/* Really wide screens can take a 4th column of photos. */
+@media (min-width: 1800px) {
+  .gallery-map-layout .gallery-grid { columns: 300px 4; }
 }
 
 #gallery-map {
-  height: 560px;
+  /* Fit the viewport while pinned, so the whole map is always visible. */
+  height: clamp(380px, calc(100vh - 190px), 720px);
   width: 100%;
   border-radius: 10px;
   border: 1px solid rgba(26, 240, 125, 0.35);
@@ -440,14 +468,28 @@ em, i:not([class]) {
 @media (max-width: 992px) {
   .gallery-map-layout { flex-direction: column; }
   .gallery-map-col {
-    position: static;
+    position: static;      /* no pinning once stacked */
     flex-basis: auto;
     max-width: 100%;
     width: 100%;
   }
-  #gallery-map { height: 420px; }
-  .gallery-map-layout .gallery-grid { column-count: 2; width: 100%; }
+  #gallery-map { height: min(60vh, 420px); }
+  .gallery-map-layout .gallery-grid { columns: 240px 2; width: 100%; }
 }
 @media (max-width: 575px) {
-  .gallery-map-layout .gallery-grid { column-count: 1; }
+  #gallery-map { height: min(55vh, 340px); }
+  .gallery-map-layout .gallery-grid { columns: auto 1; }
 }
+
+/* Wide (non-square) skill logos, e.g. GMTSAR — keep them the same visual
+   height as the 50x50 icons instead of squashing them into a square. */
+.skill-icon-wide {
+  height: 40px;
+  width: auto;
+  max-width: 100%;
+  /* If the cell is narrower than the logo, max-width clamps the width while the
+     fixed height stays — object-fit stops that from squashing the artwork. */
+  object-fit: contain;
+  vertical-align: middle;
+}
+@media (max-width: 575px) { .skill-icon-wide { height: 34px; } }
