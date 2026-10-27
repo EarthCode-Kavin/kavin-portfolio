@@ -52,13 +52,20 @@
     attributionControl: true
   });
 
-  // Dark basemap to match the theme (CARTO dark matter). Retina-aware.
-  L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
+  // Dark basemap to match the theme — Esri Dark Gray Canvas (no API key required).
+  // Base terrain layer, then a reference layer for place labels.
+  L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}", {
     attribution:
-      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> ' +
-      '&copy; <a href="https://carto.com/attributions">CARTO</a>',
-    subdomains: "abcd",
+      'Tiles &copy; Esri &mdash; Esri, DeLorme, HERE, &copy; ' +
+      '<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    maxNativeZoom: 16,
     maxZoom: 19
+  }).addTo(map);
+
+  L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}", {
+    maxNativeZoom: 16,
+    maxZoom: 19,
+    pane: "overlayPane"
   }).addTo(map);
 
   var markers = {};   // photo index -> marker
